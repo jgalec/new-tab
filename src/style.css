@@ -1,0 +1,15 @@
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: #282c34;
+  font-family: sans-serif;
+  color: #f4f4f4;
+  text-align: center;
+}
+
+.fa-cat {
+  font-size: 12rem;
+}
