@@ -12,6 +12,7 @@ A simple extension that customizes the new tab start page. More features will be
 2. `cd` into the cloned repository directory.
 3. Install the project dependencies. If you're using `npm`, you can do this with the command `npm install`.
 4. Build the project using the command `npm run build`.
+5. Copy the `manifest.json` to the `dist` folder
 
 ## Loading the Extension
 
