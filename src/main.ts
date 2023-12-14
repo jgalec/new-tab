@@ -1,33 +1,49 @@
 import "./style.css";
 
-document.addEventListener("DOMContentLoaded", () => {
-  const app = document.getElementById("app") as HTMLElement;
-  const browserInfo = detectBrowserInfo();
+function setBackground(imageUrl: string) {
+  document.body.style.cssText = `
+    background-image: url(${imageUrl});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  `;
+}
 
-  const appContent = `
-  <div>
-    <h1>Hello! I'm a browser extension! <i class="fa-regular fa-face-laugh-beam"></i></h1>
-    <h2>You're using ${browserInfo.name}</h2>
-    <h3>and its version is ${browserInfo.version}!</h3>
+function changeBackground() {
+  const imageUpload = document.getElementById(
+    "imageUpload"
+  ) as HTMLInputElement;
 
-    <i class="fa-solid fa-cat"></i>
-  </div>
-`;
-  app.innerHTML = appContent;
-});
-
-function detectBrowserInfo() {
-  const userAgent = navigator.userAgent;
-
-  let browserName: string | null = null;
-  let browserVersion: number | null = null;
-
-  if (/Edg/.test(userAgent)) {
-    browserName = 'Edge <i class="fa-brands fa-edge"></i>';
-    browserVersion = Math.floor(
-      parseFloat(userAgent.substring(userAgent.indexOf("Edg") + 4))
-    );
+  const savedImage = localStorage.getItem("backgroundImage");
+  if (savedImage) {
+    setBackground(savedImage);
   }
 
-  return { name: browserName, version: browserVersion };
+  imageUpload.addEventListener("change", function () {
+    const file = this.files ? this.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = function () {
+        if (typeof reader.result === "string") {
+          setBackground(reader.result);
+          localStorage.setItem("backgroundImage", reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  const icon = document.getElementById("icon");
+
+  if (icon) {
+    icon.addEventListener("click", () => {
+      const imageUpload = document.getElementById(
+        "imageUpload"
+      ) as HTMLInputElement;
+      imageUpload.click();
+    });
+    changeBackground();
+  }
+});
