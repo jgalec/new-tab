@@ -1,15 +1,27 @@
+/* https://github.com/catppuccin/catppuccin#-palette */
+/* https://github.com/catppuccin/catppuccin/blob/main/docs/style-guide.md#regular-colors */
+
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  background: #282c34;
-  font-family: sans-serif;
-  color: #f4f4f4;
-  text-align: center;
+  background: #5c5f77;
 }
 
-.fa-cat {
-  font-size: 12rem;
+#icon {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  cursor: pointer;
+}
+
+#icon i {
+  color: #acb0be;
+  transition: color 0.2s ease;
+}
+
+#icon:hover i {
+  color: #f4f4f4;
 }
