@@ -10,6 +10,14 @@ body {
   background: #5c5f77;
 }
 
+section {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  height: 100vh;
+}
+
 #icon {
   position: fixed;
   bottom: 16px;
@@ -20,6 +28,7 @@ body {
 #icon i {
   color: #acb0be;
   transition: color 0.2s ease;
+  font-size: 1.2rem;
 }
 
 #icon:hover i {
