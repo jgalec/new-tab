@@ -10,27 +10,27 @@ body {
   background: #5c5f77;
 }
 
-section {
+#change-background {
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
   width: 100%;
   height: 100vh;
-}
 
-#icon {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  cursor: pointer;
-}
+  #icon {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    cursor: pointer;
 
-#icon i {
-  color: #acb0be;
-  transition: color 0.2s ease;
-  font-size: 1.2rem;
-}
-
-#icon:hover i {
-  color: #f4f4f4;
+    i {
+      color: #acb0be;
+      transition: color 0.2s ease;
+      font-size: 1.2rem;
+    }
+  }
+  
+  #icon:hover i {
+    color: #f4f4f4;
+  }
 }
