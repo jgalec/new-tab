@@ -1,4 +1,4 @@
-import "./style.css";
+import "./style.scss";
 
 /**
  * Sets the background image of the page
