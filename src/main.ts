@@ -1,19 +1,6 @@
 import "./style.scss";
 
 /**
- * Sets the background image of the page
- * @param imageUrl Image URL
- */
-function setBackground(imageUrl: string): void {
-  document.body.style.cssText = `
-    background-image: url(${imageUrl});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  `;
-}
-
-/**
  * Changes the page background to an image selected by the user.
  * Sets previously selected image as background on page load, if it exists.
  * On selection of a new image by the user, sets it as background and stores it in IndexedDB.
@@ -21,6 +8,19 @@ function setBackground(imageUrl: string): void {
  * Reference: https://web.dev/articles/indexeddb
  */
 function changeBackground(): void {
+  // Sets the background image of the page
+  let setBackground = function (imageUrl: string): void {
+    document.body.style.cssText = `
+      background-image: url(${imageUrl});
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #26262666; /* 40% */
+      background-blend-mode: multiply;
+    `;
+  };
+
+  // Checks if the browser supports IndexedDB
   if (!("indexedDB" in window)) {
     console.log("This browser doesn't support IndexedDB.");
     return;
@@ -48,7 +48,7 @@ function changeBackground(): void {
     const transaction = db.transaction("images");
     const images = transaction.objectStore("images");
 
-    // Try to fetch an image using the key "backgroundImage"
+    // Tries to fetch an image
     const getImage = images.get("backgroundImage");
     getImage.onsuccess = function () {
       // Set the image as the page background if it exists
@@ -62,19 +62,16 @@ function changeBackground(): void {
       const file = this.files ? this.files[0] : null;
       if (file) {
         const reader = new FileReader();
-        // After reading the new image as a data URL, the function updates the page's
-        // background to display this image and then stores it in the "images" objectStore
-        // using the key "backgroundImage"
+        // Sets the new image as the tab's background and stores it in the "images" objectStore
         reader.onloadend = function () {
           if (typeof reader.result === "string") {
             setBackground(reader.result);
 
             const transaction = db.transaction("images", "readwrite");
             const images = transaction.objectStore("images");
-
             const addImage = images.put(reader.result, "backgroundImage");
             addImage.onsuccess = function () {
-              console.log("Image saved successfully!");
+              console.log("Image uploaded successfully!");
             };
           }
         };
@@ -88,16 +85,13 @@ function changeBackground(): void {
   };
 }
 
-/**
- * Runs after the DOM has loaded completely
- */
+// Runs after the DOM has loaded completely
 document.addEventListener("DOMContentLoaded", () => {
-  const icon = document.getElementById("icon");
+  // Enables image selection when the icon is clicked
+  const imageIcon = document.getElementById("image-icon");
 
-  // Set up an event handler that activates the image input when the user clicks the icon,
-  // allowing them to choose a new image.
-  if (icon) {
-    icon.addEventListener("click", () => {
+  if (imageIcon) {
+    imageIcon.addEventListener("click", () => {
       const imageUpload = document.getElementById(
         "imageUpload"
       ) as HTMLInputElement;
