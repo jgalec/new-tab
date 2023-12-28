@@ -85,6 +85,23 @@ function changeBackground(): void {
   };
 }
 
+/**
+ * Performs a Google search using the text entered in the search bar of the page.
+ */
+function doSearch(): void {
+  const searchBar = document.querySelector(".search-bar") as HTMLInputElement;
+  const query = searchBar.value;
+
+  // Checks if the text field is empty
+  if (query.trim() !== "") {
+    window.open(
+      "https://www.google.com/search?q=" + encodeURIComponent(query),
+      "_self"
+    );
+    searchBar.value = "";
+  }
+}
+
 // Runs after the DOM has loaded completely
 document.addEventListener("DOMContentLoaded", () => {
   // Enables image selection when the icon is clicked
@@ -98,5 +115,19 @@ document.addEventListener("DOMContentLoaded", () => {
       imageUpload.click();
     });
     changeBackground();
+  }
+
+  // Looks up the results in the search bar
+  const searchBar = document.querySelector(".search-bar") as HTMLInputElement;
+  const searchIcon = document.getElementById("search-icon");
+
+  searchBar.addEventListener("keypress", (event) => {
+    if (event.key === "Enter") {
+      doSearch();
+    }
+  });
+
+  if (searchIcon) {
+    searchIcon.addEventListener("click", doSearch);
   }
 });
